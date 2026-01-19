@@ -1,0 +1,7 @@
+{
+  "name": "SAN SHOP Obsidian Prime",
+  "description": "Infrastruktur digital kelas atas untuk kebutuhan Cloud Panel dan Rental Bot dengan sistem otomatisasi terintegrasi dan keamanan maksimal.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
