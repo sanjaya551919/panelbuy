@@ -10,7 +10,7 @@ import AdminPanel from './components/AdminPanel.tsx';
 import ChatBot from './components/ChatBot.tsx';
 import Receipt from './components/Receipt.tsx';
 import { Product, Order, AdminSettings } from './types.ts';
-import { Wifi, ShieldAlert, Lock, ArrowLeft, ArrowRight, ShieldCheck, ShoppingBag, Terminal, Cpu, Globe } from 'lucide-react';
+import { Wifi, ShieldAlert, Lock, ArrowLeft, ArrowRight, ShieldCheck, ShoppingBag, Terminal } from 'lucide-react';
 
 const HotspotAccess: React.FC = () => {
   const [step, setStep] = useState<'verify' | 'show'>('verify');
@@ -26,12 +26,12 @@ const HotspotAccess: React.FC = () => {
 
   return (
     <div className="min-h-screen pt-24 pb-20 px-6">
-      <div className="max-w-2xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
+      <div className="max-w-2xl mx-auto space-y-8">
         <Link to="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-white transition-colors font-bold uppercase text-[10px] tracking-widest">
           <ArrowLeft className="w-3 h-3" /> Kembali ke Beranda
         </Link>
         
-        <div className="premium-glass rounded-[3.5rem] p-12 overflow-hidden relative shadow-[0_50px_100px_rgba(0,0,0,0.5)] border-blue-500/10">
+        <div className="premium-glass rounded-[3.5rem] p-12 overflow-hidden relative shadow-2xl border-blue-500/10">
           <div className="absolute top-0 right-0 p-8 opacity-5">
              <Wifi className="w-64 h-64 text-blue-500" />
           </div>
@@ -65,23 +65,20 @@ const HotspotAccess: React.FC = () => {
                 <button 
                   onClick={handleVerify}
                   disabled={loading}
-                  className="w-full bg-blue-600 hover:bg-blue-500 text-white py-6 rounded-2xl font-black uppercase tracking-widest shadow-2xl shadow-blue-500/20 transition-all active:scale-[0.98] flex items-center justify-center gap-4 text-xs"
+                  className="w-full bg-blue-600 hover:bg-blue-500 text-white py-6 rounded-2xl font-black uppercase tracking-widest shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-4 text-xs"
                 >
                   {loading ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      Menganalisa...
-                    </>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                   ) : (
                     <>
                       <Lock className="w-4 h-4" />
-                      Verifikasi & Tampilkan Sandi
+                      Tampilkan Sandi Hotspot
                     </>
                   )}
                 </button>
               </div>
             ) : (
-              <div className="space-y-10 animate-in zoom-in duration-500">
+              <div className="space-y-10">
                 <div className="grid grid-cols-1 gap-6">
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-slate-600 uppercase tracking-widest ml-4">Nama Hotspot (SSID)</label>
@@ -92,12 +89,11 @@ const HotspotAccess: React.FC = () => {
                   </div>
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-slate-600 uppercase tracking-widest ml-4">Sandi Hotspot</label>
-                    <div className="bg-blue-600 border border-blue-400/30 rounded-3xl p-8 text-white font-black text-4xl tracking-tighter text-center shadow-[0_20px_60px_rgba(59,130,246,0.3)]">
+                    <div className="bg-blue-600 border border-blue-400/30 rounded-3xl p-8 text-white font-black text-4xl tracking-tighter text-center shadow-xl">
                       sannobjtvvkn
                     </div>
                   </div>
                 </div>
-                
                 <div className="text-center pt-4">
                    <p className="text-[9px] font-black text-green-500 uppercase tracking-[0.5em] animate-pulse">Akses Berhasil Dibuka</p>
                 </div>
@@ -114,7 +110,7 @@ const HomePage: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
   const [adminSettings, setAdminSettings] = useState<AdminSettings>({
-    marqueeText: "🔥 UPDATE: AM Premium 1th (17k) & CapCut Premium 1th (20k) telah tersedia! Nikmati kecepatan tanpa batas dengan infrastruktur San Shop.",
+    marqueeText: "🔥 UPDATE: AM Premium 1th (17k) & CapCut Premium 1th (20k) telah tersedia!",
     marqueeDuration: 20,
     ads: [
       "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&q=80&w=1200",
@@ -126,7 +122,6 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const saved = localStorage.getItem('san_admin_settings');
     if (saved) setAdminSettings(JSON.parse(saved));
-    
     const activeOrder = localStorage.getItem('active_order');
     if (activeOrder) setCurrentOrder(JSON.parse(activeOrder));
   }, []);
@@ -134,7 +129,6 @@ const HomePage: React.FC = () => {
   const handleOrderComplete = (order: Order) => {
     setCurrentOrder(order);
     localStorage.setItem('active_order', JSON.stringify(order));
-    
     const history = JSON.parse(localStorage.getItem('order_history') || '[]');
     history.push(order);
     localStorage.setItem('order_history', JSON.stringify(history));
@@ -150,23 +144,21 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen pb-24">
       <Header />
-      
       <div className="max-w-5xl mx-auto px-6 mt-12">
         <Link to="/hotspot" className="group relative block overflow-hidden rounded-[2.5rem] premium-glass p-8 border-blue-500/10 shadow-2xl transition-all hover:border-blue-500/30">
           <div className="absolute top-0 right-0 p-12 opacity-5 -rotate-12 translate-x-12 -translate-y-6 group-hover:scale-110 transition-transform">
             <Wifi className="w-48 h-48 text-blue-500" />
           </div>
-          
           <div className="relative flex items-center justify-between gap-6">
             <div className="flex items-center gap-6">
-              <div className="w-16 h-16 bg-blue-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-blue-500/20 group-hover:rotate-6 transition-transform">
+              <div className="w-16 h-16 bg-blue-600 rounded-3xl flex items-center justify-center shadow-2xl group-hover:rotate-6 transition-transform">
                 <Wifi className="w-8 h-8 text-white" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-white font-black uppercase text-lg tracking-tight">Cek Sandi Hotspot Saya</h3>
+                <h3 className="text-white font-black uppercase text-lg tracking-tight">Cek Sandi Hotspot</h3>
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-3 h-3 text-blue-500" />
-                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Verifikasi Identitas Nexus</p>
+                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Identitas Nexus Alpha</p>
                 </div>
               </div>
             </div>
@@ -177,10 +169,9 @@ const HomePage: React.FC = () => {
         </Link>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 mt-12 space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+      <div className="max-w-5xl mx-auto px-6 mt-12 space-y-12">
         <BannerSlider images={adminSettings.ads} />
         <Marquee text={adminSettings.marqueeText} duration={adminSettings.marqueeDuration} />
-        
         <main className="py-6">
           <ProductList onSelect={setSelectedProduct} />
         </main>
@@ -193,9 +184,7 @@ const HomePage: React.FC = () => {
           onComplete={handleOrderComplete}
         />
       )}
-      
       <ChatBot />
-      
       <footer className="max-w-5xl mx-auto px-6 py-20 border-t border-white/5 text-center mt-20">
         <div className="flex flex-col items-center gap-6">
            <div className="flex items-center gap-3">
